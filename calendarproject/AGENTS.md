@@ -96,9 +96,9 @@ This is a calendar application built with modern web technologies. The applicati
 
 3. **File Naming**
 
-   - Use kebab-case for directories: `link-manager/`
-   - Use PascalCase for React components: `LinkCard.tsx`
-   - Use camelCase for utilities and hooks: `useLinks.ts`
+   - Use kebab-case for directories: `calendar-manager/`
+   - Use PascalCase for React components: `CalendarCard.tsx`
+   - Use camelCase for utilities and hooks: `useCalendars.ts`
    - Use kebab-case for regular TypeScript files: `api-client.ts`
 
 4. **Import Organization**
