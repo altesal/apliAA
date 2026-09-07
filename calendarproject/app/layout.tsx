@@ -8,6 +8,7 @@ import {
 import { shadcn } from "@clerk/ui/themes";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Button } from "@/components/ui/button";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -29,23 +30,24 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} dark h-full antialiased`}
+      style={{ colorScheme: "dark" }}
     >
       <body className="min-h-full flex flex-col">
         <ClerkProvider appearance={{ theme: shadcn }}>
-          <header className="flex w-full items-center justify-between bg-slate-900 px-6 py-4 text-white sm:px-10">
+          <header className="flex w-full items-center justify-between border-b border-gray-700 bg-black px-6 py-4 text-white sm:px-10">
             <h1 className="text-xl font-semibold">Calendar</h1>
             <nav className="flex items-center gap-3">
               <Show when="signed-out">
                 <SignInButton mode="modal">
-                  <button className="text-sm font-medium text-white transition-colors hover:text-slate-300">
+                  <Button variant="ghost" className="text-white hover:bg-transparent hover:text-slate-300">
                     Sign In
-                  </button>
+                  </Button>
                 </SignInButton>
                 <SignUpButton mode="modal">
-                  <button className="rounded-lg bg-white px-3 py-2 text-sm font-semibold text-slate-900 transition-colors hover:bg-slate-200">
+                  <Button className="bg-white text-sm font-semibold text-slate-900 hover:bg-slate-200">
                     Sign Up
-                  </button>
+                  </Button>
                 </SignUpButton>
               </Show>
               <Show when="signed-in">
