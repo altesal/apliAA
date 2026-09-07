@@ -16,18 +16,18 @@ This document provides specific guidelines for implementing and working with aut
 
 ### Protected Routes
 
-- `/dashboard` - **MUST** require authentication
-- All routes under `/dashboard/*` should inherit this protection
+- `/calendar` - **MUST** require authentication
+- All routes under `/calendar/*` should inherit this protection
 - Use Clerk middleware or auth checks to enforce protection
 
 ### Redirect Rules
 
-1. **Unauthenticated users accessing `/dashboard`:**
+1. **Unauthenticated users accessing `/calendar`:**
 
    - Redirect to homepage `/` or show Clerk sign-in modal
 
 2. **Authenticated users accessing homepage `/`:**
-   - Redirect to `/dashboard`
+   - Redirect to `/calendar`
 
 ### Implementation Pattern
 
@@ -36,15 +36,15 @@ This document provides specific guidelines for implementing and working with aut
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
-// Protect dashboard route
-export default async function DashboardPage() {
+// Protect calendar route
+export default async function calendarPage() {
   const { userId } = await auth();
 
   if (!userId) {
     redirect("/");
   }
 
-  // Dashboard content
+  // calendar content
 }
 
 // Redirect from homepage if authenticated
@@ -52,7 +52,7 @@ export default async function HomePage() {
   const { userId } = await auth();
 
   if (userId) {
-    redirect("/dashboard");
+    redirect("/calendar");
   }
 
   // Homepage content
@@ -170,7 +170,7 @@ export async function updateLink(linkId: string, data: UpdateData) {
 
 - **Issue:** User not redirecting after sign-in
 
-  - **Solution:** Ensure afterSignIn/afterSignUp URLs are configured in Clerk Dashboard
+  - **Solution:** Ensure afterSignIn/afterSignUp URLs are configured in Clerk calendar
 
 - **Issue:** Auth state not updating
 
