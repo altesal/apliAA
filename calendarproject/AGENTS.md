@@ -9,36 +9,6 @@ This document provides comprehensive guidelines for AI agents and LLMs working o
 3. [Coding Standards](#coding-standards)
 4. [Documentation](#documentation)
 
-## ⚠️ CRITICAL: Required Reading Before Code Generation
-
-**🚨 MANDATORY REQUIREMENT 🚨**
-
-Before generating ANY code, you MUST:
-
-1. **READ the relevant documentation files** in the `/docs` directory that apply to your task
-2. **FOLLOW the patterns and guidelines** specified in those files
-3. **DO NOT proceed** with code generation until you have reviewed the applicable documentation
-
-This is **NOT OPTIONAL**. Failure to read the relevant documentation before generating code will result in:
-
-- Incorrect implementations that don't follow project patterns
-- Security vulnerabilities from improper authentication/authorization
-- Inconsistent UI components that don't match the project's design system
-- Wasted time fixing preventable mistakes
-
-### Required Documentation by Topic
-
-Consult these files based on the task at hand:
-
-- **🔐 [Authentication Guidelines](docs/authentication.md)** - **MUST READ** before implementing any authentication, route protection, user data access, or auth-related features
-- **🎨 [UI Components Guidelines](docs/ui-components.md)** - **MUST READ** before creating or installing any UI components, forms, buttons, or styled elements
-
-**Workflow:**
-
-1. Identify what you need to implement
-2. Read the corresponding documentation file(s) completely
-3. Apply the patterns and guidelines from the documentation
-4. Only then generate code
 
 ## Project Overview
 
