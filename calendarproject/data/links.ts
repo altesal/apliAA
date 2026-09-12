@@ -61,3 +61,12 @@ export async function deleteLinkForUser(userId: string, linkId: number) {
 
   return link;
 }
+
+export async function getLinkByShortCode(shortCode: string) {
+  const [link] = await db.db
+    .select()
+    .from(links)
+    .where(eq(links.shortCode, shortCode));
+
+  return link;
+}
