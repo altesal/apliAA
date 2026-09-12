@@ -22,7 +22,7 @@ export default async function CalendarPage() {
     .select()
     .from(links)
     .where(eq(links.userId, userId))
-    .orderBy(links.createdAt);
+    .orderBy(links.updatedAt);
 
   return (
     <div className="mx-auto max-w-2xl p-6">
