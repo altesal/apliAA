@@ -3,7 +3,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
-import { createLinkForUser } from "@/data/links";
+import { createLinkForUser, updateLinkForUser, deleteLinkForUser } from "@/data/links";
 
 const createLinkSchema = z.object({
   originalUrl: z.string().url("Please enter a valid URL"),
@@ -17,9 +17,27 @@ const createLinkSchema = z.object({
     .or(z.literal("")),
 });
 
+const updateLinkSchema = createLinkSchema.extend({
+  id: z.number().int().positive(),
+});
+
+const deleteLinkSchema = z.object({
+  id: z.number().int().positive(),
+});
+
 interface CreateLinkInput {
   originalUrl: string;
   customSlug?: string;
+}
+
+interface UpdateLinkInput {
+  id: number;
+  originalUrl: string;
+  customSlug?: string;
+}
+
+interface DeleteLinkInput {
+  id: number;
 }
 
 export async function createLink(input: CreateLinkInput) {
@@ -44,5 +62,55 @@ export async function createLink(input: CreateLinkInput) {
       return { error: "That custom slug is already taken" };
     }
     return { error: "Failed to create link" };
+  }
+}
+
+export async function updateLink(input: UpdateLinkInput) {
+  const { userId } = await auth();
+  if (!userId) {
+    return { error: "Unauthorized" };
+  }
+
+  try {
+    const validated = updateLinkSchema.parse(input);
+    const link = await updateLinkForUser(userId, validated.id, {
+      originalUrl: validated.originalUrl,
+      customSlug: validated.customSlug || undefined,
+    });
+    if (!link) {
+      return { error: "Link not found" };
+    }
+    revalidatePath("/calendar");
+    return { success: true, data: link };
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return { error: error.issues[0]?.message ?? "Invalid input data" };
+    }
+    if (error instanceof Error && error.message.includes("unique")) {
+      return { error: "That custom slug is already taken" };
+    }
+    return { error: "Failed to update link" };
+  }
+}
+
+export async function deleteLink(input: DeleteLinkInput) {
+  const { userId } = await auth();
+  if (!userId) {
+    return { error: "Unauthorized" };
+  }
+
+  try {
+    const validated = deleteLinkSchema.parse(input);
+    const link = await deleteLinkForUser(userId, validated.id);
+    if (!link) {
+      return { error: "Link not found" };
+    }
+    revalidatePath("/calendar");
+    return { success: true, data: link };
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return { error: error.issues[0]?.message ?? "Invalid input data" };
+    }
+    return { error: "Failed to delete link" };
   }
 }

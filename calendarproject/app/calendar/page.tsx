@@ -10,6 +10,8 @@ import {
   CardContent,
 } from "@/components/ui/card";
 import { CreateLinkDialog } from "@/app/calendar/create-link-dialog";
+import { EditLinkDialog } from "@/app/calendar/edit-link-dialog";
+import { DeleteLinkDialog } from "@/app/calendar/delete-link-dialog";
 
 export default async function CalendarPage() {
   const { userId } = await auth();
@@ -44,7 +46,7 @@ export default async function CalendarPage() {
               <CardHeader>
                 <CardTitle>{link.shortCode}</CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="flex flex-col gap-3">
                 <a
                   href={link.originalUrl}
                   target="_blank"
@@ -53,6 +55,10 @@ export default async function CalendarPage() {
                 >
                   {link.originalUrl}
                 </a>
+                <div className="flex gap-2">
+                  <EditLinkDialog link={link} />
+                  <DeleteLinkDialog link={link} />
+                </div>
               </CardContent>
             </Card>
           ))}
