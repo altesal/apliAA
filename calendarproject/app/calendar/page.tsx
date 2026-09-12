@@ -9,7 +9,7 @@ import {
   CardTitle,
   CardContent,
 } from "@/components/ui/card";
-import { link } from "fs";
+import { CreateLinkDialog } from "@/app/calendar/create-link-dialog";
 
 export default async function CalendarPage() {
   const { userId } = await auth();
@@ -26,7 +26,10 @@ export default async function CalendarPage() {
 
   return (
     <div className="mx-auto max-w-2xl p-6">
-      <h1 className="mb-4 text-2xl font-semibold">Calendar</h1>
+      <div className="mb-4 flex items-center justify-between">
+        <h1 className="text-2xl font-semibold">Calendar</h1>
+        <CreateLinkDialog />
+      </div>
 
       <h2 className="mb-2 text-lg font-medium">Your Links</h2>
 
