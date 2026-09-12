@@ -1,6 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import db from "@/db";
 import { links } from "@/db/schema";
 import {
@@ -22,7 +22,7 @@ export default async function CalendarPage() {
     .select()
     .from(links)
     .where(eq(links.userId, userId))
-    .orderBy(links.updatedAt);
+    .orderBy(desc(links.updatedAt));
 
   return (
     <div className="mx-auto max-w-2xl p-6">
